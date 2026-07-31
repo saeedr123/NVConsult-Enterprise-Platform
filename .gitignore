@@ -1,0 +1,27 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Dependencies / builds
+node_modules/
+vendor/
+*.log
+
+# Secrets / local configuration
+.env
+.env.*
+!.env.example
+wp-config.php
+
+# WordPress runtime/generated content
+wp-content/cache/
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/backup*/
+
+# Archives
+*.zip
+*.tar
+*.gz
