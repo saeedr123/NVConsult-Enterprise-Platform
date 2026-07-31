@@ -1,0 +1,17 @@
+name: PHP Quality
+on:
+  push:
+  pull_request:
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: PHP syntax check
+        run: find wp-content -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Reject committed OpenAI secrets
+        run: |
+          if grep -RIE --exclude-dir=.git --exclude='*.md' 'sk-[A-Za-z0-9_-]{20,}' .; then
+            echo 'Possible OpenAI secret committed to repository.'
+            exit 1
+          fi
