@@ -1,15 +1,15 @@
 <?php
 /**
  * Plugin Name: NVConsult Core
- * Description: Durable content models, relationships, jobs, applications, capabilities and shared platform services for NVConsult.
- * Version: 0.8.0
+ * Description: Durable content models, relationships, jobs, applications/documents, capabilities and shared platform services for NVConsult.
+ * Version: 0.9.0
  * Requires at least: 6.4
  * Requires PHP: 8.0
  * Text Domain: nvconsult-core
  */
 if (!defined('ABSPATH')) { exit; }
 
-define('NVCONSULT_CORE_VERSION', '0.8.0');
+define('NVCONSULT_CORE_VERSION', '0.9.0');
 define('NVCONSULT_CORE_FILE', __FILE__);
 define('NVCONSULT_CORE_DIR', plugin_dir_path(__FILE__));
 
@@ -22,6 +22,7 @@ require_once NVCONSULT_CORE_DIR . 'includes/class-job-importer.php';
 require_once NVCONSULT_CORE_DIR . 'includes/class-job-taxonomies.php';
 require_once NVCONSULT_CORE_DIR . 'includes/class-job-query.php';
 require_once NVCONSULT_CORE_DIR . 'includes/class-applications.php';
+require_once NVCONSULT_CORE_DIR . 'includes/class-documents.php';
 
 register_activation_hook(__FILE__, ['NVConsult_Core_Capabilities', 'activate']);
 register_deactivation_hook(__FILE__, ['NVConsult_Core_Capabilities', 'deactivate']);
@@ -35,4 +36,5 @@ add_action('plugins_loaded', static function () {
     NVConsult_Core_Job_Taxonomies::init();
     NVConsult_Core_Job_Query::init();
     NVConsult_Core_Applications::init();
+    NVConsult_Core_Documents::init();
 });
