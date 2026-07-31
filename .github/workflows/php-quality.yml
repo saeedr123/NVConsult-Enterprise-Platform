@@ -27,3 +27,13 @@ jobs:
             echo 'Debug output calls found in NVConsult Core.'
             exit 1
           fi
+      - name: Build installable WordPress packages
+        run: bash scripts/build-wordpress-packages.sh
+      - name: Upload validated staging packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: nvconsult-wordpress-staging
+          path: |
+            dist/nvconsult-core.zip
+            dist/nvconsult-theme.zip
+          retention-days: 14
