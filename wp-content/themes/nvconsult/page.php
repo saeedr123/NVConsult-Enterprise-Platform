@@ -1,0 +1,1 @@
+<?php get_header(); ?><section class="nv-content"><div class="nv-wrap"><?php while(have_posts()):the_post(); ?><article><div class="nv-eyebrow">NVConsult</div><h1><?php the_title(); ?></h1><?php the_content(); ?></article><?php endwhile; ?></div></section><?php get_footer(); ?>

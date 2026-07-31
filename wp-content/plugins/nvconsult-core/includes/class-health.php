@@ -1,0 +1,7 @@
+<?php
+if(!defined('ABSPATH')){exit;}
+final class NVConsult_Core_Health{
+ public static function init():void{add_action('admin_menu',[self::class,'menu'],20);}
+ public static function menu():void{if(current_user_can('manage_options'))add_submenu_page('edit.php?post_type=nv_application',__('Platform Health','nvconsult-core'),__('Platform Health','nvconsult-core'),'manage_options','nvconsult-health',[self::class,'render']);}
+ public static function render():void{$checks=[__('WordPress cron','nvconsult-core')=>!defined('DISABLE_WP_CRON')||!DISABLE_WP_CRON,__('OpenAI server key','nvconsult-core')=>(bool)getenv('OPENAI_API_KEY'),__('HTTPS','nvconsult-core')=>is_ssl(),__('Pretty permalinks','nvconsult-core')=>(bool)get_option('permalink_structure'),__('Upload directory writable','nvconsult-core')=>wp_is_writable(wp_upload_dir()['basedir'])];echo'<div class="wrap"><h1>'.esc_html__('NVConsult Platform Health','nvconsult-core').'</h1><table class="widefat striped" style="max-width:800px"><thead><tr><th>'.esc_html__('Check','nvconsult-core').'</th><th>'.esc_html__('Status','nvconsult-core').'</th></tr></thead><tbody>';foreach($checks as$l=>$ok)printf('<tr><td>%s</td><td><strong>%s</strong></td></tr>',esc_html($l),esc_html($ok?__('OK','nvconsult-core'):__('Needs attention','nvconsult-core')));echo'</tbody></table><p>'.esc_html__('AI keys must remain server-side and must never be stored in theme JavaScript, browser storage, or committed to Git.','nvconsult-core').'</p></div>';}
+}

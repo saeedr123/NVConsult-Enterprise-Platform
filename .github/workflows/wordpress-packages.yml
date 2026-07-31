@@ -1,0 +1,27 @@
+name: WordPress Staging Packages
+on:
+  workflow_dispatch:
+  push:
+    branches: [platform/base-v1]
+    paths:
+      - 'wp-content/plugins/nvconsult-core/**'
+      - 'wp-content/themes/nvconsult/**'
+      - 'scripts/build-wordpress-packages.sh'
+      - '.github/workflows/wordpress-packages.yml'
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: PHP syntax check
+        run: find wp-content/plugins/nvconsult-core wp-content/themes/nvconsult -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Build installable ZIPs
+        run: bash scripts/build-wordpress-packages.sh
+      - name: Upload staging packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: nvconsult-wordpress-staging
+          path: |
+            dist/nvconsult-core.zip
+            dist/nvconsult-theme.zip
+          retention-days: 14

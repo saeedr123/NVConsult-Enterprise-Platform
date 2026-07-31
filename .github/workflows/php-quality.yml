@@ -1,0 +1,39 @@
+name: PHP Quality
+on:
+  push:
+  pull_request:
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: PHP syntax check
+        run: find wp-content -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Reject merge conflict markers
+        run: |
+          if grep -RInE --exclude-dir=.git '^(<<<<<<<|=======|>>>>>>>)' wp-content; then
+            echo 'Merge conflict markers found.'
+            exit 1
+          fi
+      - name: Reject committed OpenAI secrets
+        run: |
+          if grep -RIE --exclude-dir=.git --exclude='*.md' 'sk-[A-Za-z0-9_-]{20,}' .; then
+            echo 'Possible OpenAI secret committed to repository.'
+            exit 1
+          fi
+      - name: Flag dangerous debug output
+        run: |
+          if grep -RInE --include='*.php' '(^|[^A-Za-z0-9_])(var_dump|print_r|dd)[[:space:]]*\(' wp-content/plugins/nvconsult-core; then
+            echo 'Debug output calls found in NVConsult Core.'
+            exit 1
+          fi
+      - name: Build installable WordPress packages
+        run: bash scripts/build-wordpress-packages.sh
+      - name: Upload validated staging packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: nvconsult-wordpress-staging
+          path: |
+            dist/nvconsult-core.zip
+            dist/nvconsult-theme.zip
+          retention-days: 14
