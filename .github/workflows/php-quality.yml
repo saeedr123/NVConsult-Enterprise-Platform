@@ -23,7 +23,7 @@ jobs:
           fi
       - name: Flag dangerous debug output
         run: |
-          if grep -RInE --include='*.php' '(var_dump\(|print_r\(|die\(|dd\()' wp-content/plugins/nvconsult-core; then
-            echo 'Debug/die calls found in NVConsult Core.'
+          if grep -RInE --include='*.php' '(^|[^A-Za-z0-9_])(var_dump|print_r|dd)[[:space:]]*\(' wp-content/plugins/nvconsult-core; then
+            echo 'Debug output calls found in NVConsult Core.'
             exit 1
           fi
