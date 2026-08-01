@@ -25,6 +25,24 @@ $services = array(
 	),
 );
 $about_points = explode( "\n", $settings['about_points'] );
+$stats = array(
+	array(
+		'value' => $settings['stats_1_value'],
+		'label' => $settings['stats_1_label'],
+	),
+	array(
+		'value' => $settings['stats_2_value'],
+		'label' => $settings['stats_2_label'],
+	),
+	array(
+		'value' => $settings['stats_3_value'],
+		'label' => $settings['stats_3_label'],
+	),
+	array(
+		'value' => $settings['stats_4_value'],
+		'label' => $settings['stats_4_label'],
+	),
+);
 ?>
 <main id="main-content">
 	<section class="hero" id="top">
@@ -61,10 +79,9 @@ $about_points = explode( "\n", $settings['about_points'] );
 				<?php endforeach; ?>
 			</div>
 			<div class="stats">
-				<div class="stat"><strong>12+</strong><span>Years of advisory delivery</span></div>
-				<div class="stat"><strong>30%</strong><span>Typical workflow efficiency lift</span></div>
-				<div class="stat"><strong>100%</strong><span>Editable content framework</span></div>
-				<div class="stat"><strong>4</strong><span>Focused platform sprints</span></div>
+				<?php foreach ( $stats as $stat ) : ?>
+					<div class="stat"><strong><?php echo esc_html( $stat['value'] ); ?></strong><span><?php echo esc_html( $stat['label'] ); ?></span></div>
+				<?php endforeach; ?>
 			</div>
 		</div>
 	</section>
@@ -83,8 +100,8 @@ $about_points = explode( "\n", $settings['about_points'] );
 				</ul>
 			</div>
 			<div class="card">
-				<h3>Platform blueprint</h3>
-				<p>The homepage remains intentionally frozen in structure while each message, CTA, and service card can be updated through settings.</p>
+				<h3><?php echo esc_html( $settings['about_card_title'] ); ?></h3>
+				<p><?php echo esc_html( $settings['about_card_body'] ); ?></p>
 			</div>
 		</div>
 	</section>
