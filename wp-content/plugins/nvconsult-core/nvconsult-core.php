@@ -15,6 +15,7 @@ class NVConsult_Core {
 		add_action( 'admin_menu', array( __CLASS__, 'register_settings_page' ) );
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( __CLASS__, 'add_action_links' ) );
+		add_action( 'wp_dashboard_setup', array( __CLASS__, 'register_dashboard_widget' ) );
 	}
 
 	public static function activate() {
@@ -65,6 +66,22 @@ class NVConsult_Core {
 		array_unshift( $links, $settings_link );
 
 		return $links;
+	}
+
+	public static function register_dashboard_widget() {
+		wp_add_dashboard_widget( 'nvconsult_dashboard_widget', 'NVConsult Platform Status', array( __CLASS__, 'render_dashboard_widget' ) );
+	}
+
+	public static function render_dashboard_widget() {
+		$settings = get_option( 'nvconsult_homepage_settings', array() );
+		$lead_count = wp_count_posts( 'nvconsult_lead' )->publish ?? 0;
+		$theme_name = wp_get_theme()->get( 'Name' );
+		?>
+		<p><strong>Theme:</strong> <?php echo esc_html( $theme_name ); ?></p>
+		<p><strong>Homepage status:</strong> <?php echo esc_html( ! empty( $settings['hero_title'] ) ? 'Configured' : 'Needs setup' ); ?></p>
+		<p><strong>Leads in CRM:</strong> <?php echo esc_html( $lead_count ); ?></p>
+		<p>Use the settings page to refine homepage messaging and monitor the new CRM workflow.</p>
+		<?php
 	}
 
 	public static function register_settings_page() {

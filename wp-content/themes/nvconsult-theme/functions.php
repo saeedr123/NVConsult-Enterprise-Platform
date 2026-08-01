@@ -29,6 +29,47 @@ function nvconsult_theme_enqueue_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'nvconsult_theme_enqueue_assets' );
 
+function nvconsult_theme_render_section_heading( $title, $intro = '' ) {
+	if ( empty( $title ) ) {
+		return;
+	}
+	?>
+	<div class="section__heading">
+		<h2><?php echo esc_html( $title ); ?></h2>
+		<?php if ( ! empty( $intro ) ) : ?>
+			<p><?php echo esc_html( $intro ); ?></p>
+		<?php endif; ?>
+	</div>
+	<?php
+}
+
+function nvconsult_theme_render_button( $label, $url, $variant = 'primary' ) {
+	if ( empty( $label ) ) {
+		return;
+	}
+	$classes = 'button button--' . ( 'secondary' === $variant ? 'secondary' : 'primary' );
+	?>
+	<a class="<?php echo esc_attr( $classes ); ?>" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
+	<?php
+}
+
+function nvconsult_theme_login_logo() {
+	$logo_url = get_stylesheet_directory_uri() . '/assets/logo.png';
+	if ( file_exists( get_stylesheet_directory() . '/assets/logo.png' ) ) {
+		?>
+		<style>
+		body.login h1 a {
+			background-image: url("<?php echo esc_url( $logo_url ); ?>") !important;
+			background-size: contain;
+			width: 320px;
+			height: 80px;
+		}
+		</style>
+		<?php
+	}
+}
+add_action( 'login_enqueue_scripts', 'nvconsult_theme_login_logo' );
+
 function nvconsult_get_homepage_settings() {
 	$settings = get_option( 'nvconsult_homepage_settings', array() );
 
