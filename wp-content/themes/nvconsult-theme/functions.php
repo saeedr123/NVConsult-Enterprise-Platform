@@ -28,34 +28,51 @@ function nvconsult_theme_enqueue_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'nvconsult_theme_enqueue_assets' );
 
+function nvconsult_primary_nav_fallback() {
+	$items = array(
+		__( 'Home', 'nvconsult-theme' )               => '#top',
+		__( 'Work Abroad', 'nvconsult-theme' )        => '#work-abroad',
+		__( 'Study Abroad', 'nvconsult-theme' )       => '#study-abroad',
+		__( 'Consultation Plans', 'nvconsult-theme' ) => '#consultation-plans',
+		__( 'CV Maker', 'nvconsult-theme' )           => '#resources',
+		__( 'Blog', 'nvconsult-theme' )               => '#resources',
+		__( 'About Us', 'nvconsult-theme' )           => '#why-choose-us',
+		__( 'Contact', 'nvconsult-theme' )            => '#site-footer',
+	);
+
+	echo '<ul>';
+
+	foreach ( $items as $label => $url ) {
+		$current = '#top' === $url ? ' class="current-menu-item"' : '';
+		echo '<li' . $current . '><a href="' . esc_url( $url ) . '">' . esc_html( $label ) . '</a></li>';
+	}
+
+	echo '</ul>';
+}
+
 function nvconsult_get_homepage_settings() {
 	$settings = get_option( 'nvconsult_homepage_settings', array() );
 
 	$defaults = array(
-		'hero_title' => 'Operational clarity for growth-ready teams',
-		'hero_intro' => 'NVConsult helps founders and operators modernize delivery with strategy, execution, and CRM alignment under one roof.',
-		'hero_primary_button_label' => 'Book a discovery call',
-		'hero_primary_button_url' => '#contact',
-		'hero_secondary_button_label' => 'View the roadmap',
-		'hero_secondary_button_url' => '#services',
-		'hero_card_title' => 'Sprints delivered with measurable momentum',
-		'hero_card_copy' => 'From foundational design to launch-ready workflows, our team ships clear milestones and keeps your stakeholders informed.',
-		'section_services_title' => 'What we deliver',
-		'services_intro' => 'A focused set of services that cover brand, technology, CRM, and delivery operations.',
-		'service_1_title' => 'Platform Strategy',
-		'service_1_text' => 'Future-ready operating models tailored to the pace of your team.',
-		'service_2_title' => 'Website Systems',
-		'service_2_text' => 'Custom WordPress architecture designed for speed, extensibility, and editability.',
-		'service_3_title' => 'Revenue Enablement',
-		'service_3_text' => 'CRM flows that align technology, people, and customer experience.',
-		'section_about_title' => 'Designed to feel calm, clear, and credible',
-		'about_intro' => 'We combine strategy, product thinking, and execution to create premium digital experiences that support real growth.',
-		'about_points' => 'Editable content blocks that remain consistent across the site.\nFlexible modules that can be adapted in future sprints.\nA strong foundation for performance and maintainability.',
-		'section_cta_title' => 'Ready to move faster?',
-		'cta_text' => 'Let us help you connect your brand, your operations, and your growth engine.',
-		'cta_button_label' => 'Start a conversation',
-		'cta_button_url' => '#contact',
-		'footer_text' => '© 2026 NVConsult. Built for modern operators.',
+		'hero_title'                  => 'Your Global Journey Starts Here.',
+		'hero_study_label'            => 'Study Abroad. Work Abroad.',
+		'hero_intro'                  => 'Professional Guidance Every Step of the Way.',
+		'hero_primary_button_label'   => 'Study Abroad',
+		'hero_primary_button_url'     => '#study-abroad',
+		'hero_secondary_button_label' => 'Work Abroad',
+		'hero_secondary_button_url'   => '#work-abroad',
+		'pathways_title'              => 'What brings you here today?',
+		'pathway_study_title'         => 'I Want to Study Abroad',
+		'pathway_study_text'          => 'Explore top countries, world-class institutions and programs to build your future.',
+		'pathway_work_title'          => 'I Want to Work Abroad',
+		'pathway_work_text'           => 'Discover international career opportunities and take the next step in your professional journey.',
+		'study_destinations_title'    => 'Featured Study Destinations',
+		'opportunities_title'         => 'Featured Opportunities',
+		'why_choose_title'            => 'Why Choose NVConsult?',
+		'consultation_title'          => 'Consultation Plans',
+		'stories_title'               => 'Success Stories',
+		'resources_title'             => 'Latest Resources',
+		'footer_text'                 => '© 2026 NVConsult. All Rights Reserved.',
 	);
 
 	return wp_parse_args( $settings, $defaults );

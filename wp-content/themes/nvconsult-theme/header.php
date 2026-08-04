@@ -17,13 +17,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<div class="site-shell">
 <header class="site-header">
 	<div class="site-header__inner">
 		<a class="site-branding" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-			<?php bloginfo( 'name' ); ?>
+			<span class="site-branding__mark">NV</span>
+			<span class="site-branding__text">
+				<span class="site-branding__name">CONSULT</span>
+				<span class="site-branding__tagline"><?php echo esc_html( get_bloginfo( 'description' ) ? get_bloginfo( 'description' ) : 'Your Global Journey Starts Here' ); ?></span>
+			</span>
 		</a>
-		<nav class="site-nav" aria-label="Primary navigation">
-			<?php wp_nav_menu( array( 'theme_location' => 'primary', 'container' => false, 'fallback_cb' => false ) ); ?>
-		</nav>
+		<div class="site-header__menu">
+			<nav class="site-nav" aria-label="Primary navigation">
+				<?php
+				wp_nav_menu(
+					array(
+						'theme_location' => 'primary',
+						'container'      => false,
+						'fallback_cb'    => 'nvconsult_primary_nav_fallback',
+					)
+				);
+				?>
+			</nav>
+			<a class="header-account" href="#consultation-plans">
+				<span class="header-account__icon">👤</span>
+				<span>My NVConsult</span>
+			</a>
+		</div>
 	</div>
 </header>
