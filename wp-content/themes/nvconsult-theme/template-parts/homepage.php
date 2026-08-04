@@ -86,7 +86,7 @@ $why_choose = array(
 	array(
 		'icon'  => '🤝',
 		'title' => 'Personal Support',
-		'text'  => 'We're with you at every step of your journey.',
+		'text'  => 'We\'re with you at every step of your journey.',
 	),
 	array(
 		'icon'  => '🌐',
