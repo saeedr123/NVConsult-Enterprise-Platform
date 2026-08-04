@@ -14,7 +14,7 @@ $destinations = array(
 	array(
 		'country' => 'Cyprus',
 		'flag'    => '🇨🇾',
-		'text'    => 'Study in one of Europe's most affordable English-speaking destinations.',
+		'text'    => 'Study in one of Europe\'s most affordable English-speaking destinations.',
 		'image'   => 'linear-gradient(135deg, #4ea0e8, #0d3f80)',
 	),
 	array(
